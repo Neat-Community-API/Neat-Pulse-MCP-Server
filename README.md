@@ -92,54 +92,114 @@ This server exposes **37 tools** across 9 categories:
 
 ## Setup
 
-### 1. Clone or copy this project
+---
+
+### Mac
+
+#### 1. Clone the repository
+
+Open Terminal and run:
 
 ```bash
-cd ~/Documents/GitHub
-git clone https://github.com/cpavloske/Neat-Pulse-MCP-Server.git neat-pulse-mcp
-cd neat-pulse-mcp
+git clone https://github.com/Neat-Community-API/Neat-Pulse-MCP-Server.git ~/Documents/neat-pulse-mcp
+cd ~/Documents/neat-pulse-mcp
 ```
 
-### 2. Install dependencies
+#### 2. Install Node.js (if not already installed)
+
+Download and install from [nodejs.org](https://nodejs.org/) (version 18 or later).
+
+Verify the installation:
+
+```bash
+node --version
+```
+
+#### 3. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Build
+#### 4. Build the project
 
 ```bash
 npm run build
 ```
 
-### 4. Add to Claude Code
-
-Run this as a **single line** in your terminal:
+#### 5. Add to Claude Code
 
 ```bash
-claude mcp add neat-pulse -e NEAT_PULSE_API_KEY=YOUR_API_KEY -e NEAT_PULSE_ORG_ID=YOUR_ORG_ID -- node /full/path/to/neat-pulse-mcp/build/index.js
+claude mcp add neat-pulse \
+  -e NEAT_PULSE_API_KEY=YOUR_API_KEY \
+  -e NEAT_PULSE_ORG_ID=YOUR_ORG_ID \
+  -- node ~/Documents/neat-pulse-mcp/build/index.js
 ```
 
-Replace `YOUR_API_KEY` and `YOUR_ORG_ID` with your actual credentials.
+Replace `YOUR_API_KEY` and `YOUR_ORG_ID` with your actual credentials from Pulse **Settings > API keys** and **Settings > Organization**.
 
-**On Mac:**
-```bash
-claude mcp add neat-pulse -e NEAT_PULSE_API_KEY=YOUR_API_KEY -e NEAT_PULSE_ORG_ID=YOUR_ORG_ID -- node ~/Documents/GitHub/neat-pulse-mcp/build/index.js
-```
-
-**On Windows (PowerShell):**
-```powershell
-claude mcp add neat-pulse -e NEAT_PULSE_API_KEY=YOUR_API_KEY -e NEAT_PULSE_ORG_ID=YOUR_ORG_ID -- node $env:USERPROFILE\Documents\GitHub\neat-pulse-mcp\build\index.js
-```
-
-### 5. Restart Claude Code and verify
+#### 6. Verify
 
 ```bash
 claude
 /mcp
 ```
 
-You should see `neat-pulse` with a green checkmark.
+You should see `neat-pulse` listed with a green checkmark.
+
+---
+
+### Windows
+
+#### 1. Clone the repository
+
+Open PowerShell and run:
+
+```powershell
+git clone https://github.com/Neat-Community-API/Neat-Pulse-MCP-Server.git "$env:USERPROFILE\Documents\neat-pulse-mcp"
+cd "$env:USERPROFILE\Documents\neat-pulse-mcp"
+```
+
+#### 2. Install Node.js (if not already installed)
+
+Download and install from [nodejs.org](https://nodejs.org/) (version 18 or later).
+
+Verify the installation:
+
+```powershell
+node --version
+```
+
+#### 3. Install dependencies
+
+```powershell
+npm install
+```
+
+#### 4. Build the project
+
+```powershell
+npm run build
+```
+
+#### 5. Add to Claude Code
+
+```powershell
+claude mcp add neat-pulse -e NEAT_PULSE_API_KEY=YOUR_API_KEY -e NEAT_PULSE_ORG_ID=YOUR_ORG_ID -- node "$env:USERPROFILE\Documents\neat-pulse-mcp\build\index.js"
+```
+
+Replace `YOUR_API_KEY` and `YOUR_ORG_ID` with your actual credentials from Pulse **Settings > API keys** and **Settings > Organization**.
+
+#### 6. Verify
+
+```powershell
+claude
+/mcp
+```
+
+You should see `neat-pulse` listed with a green checkmark.
+
+---
 
 ## Usage Examples
 
@@ -168,7 +228,7 @@ Once connected, you can ask Claude things like:
 neat-pulse-mcp/
   src/
     client.ts    # Neat Pulse API HTTP client wrapper
-    index.ts     # MCP server with all 27 tools registered
+    index.ts     # MCP server with all 37 tools registered
   build/         # Compiled JavaScript (after npm run build)
   package.json
   tsconfig.json
