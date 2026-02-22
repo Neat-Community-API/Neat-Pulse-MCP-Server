@@ -4,7 +4,7 @@ A custom Model Context Protocol (MCP) server that wraps the entire Neat Pulse RE
 
 ## What It Does
 
-This server exposes **27 tools** across 6 categories:
+This server exposes **37 tools** across 9 categories:
 
 ### Devices (Endpoints)
 | Tool | Description |
@@ -58,6 +58,30 @@ This server exposes **27 tools** across 6 categories:
 | `create_user` | Invite a new user |
 | `update_user` | Update user role/regions |
 | `delete_user` | Remove a user |
+
+### Profiles
+| Tool | Description |
+|------|-------------|
+| `list_profiles` | List all Pulse profiles |
+
+### Audit Logs
+| Tool | Description |
+|------|-------------|
+| `get_audit_logs` | List audit log entries within a date range |
+
+### Bug Reports
+| Tool | Description |
+|------|-------------|
+| `generate_bug_report` | Generate a bug report for one or more devices |
+
+### Room Notes
+| Tool | Description |
+|------|-------------|
+| `list_room_notes` | List all notes for a specific room |
+| `get_room_note` | Get a specific room note |
+| `create_room_note` | Create a note for a room |
+| `delete_room_note` | Delete a room note |
+| `list_all_room_notes` | List all notes across every room |
 
 ## Prerequisites
 
