@@ -1,0 +1,23 @@
+{
+  "name": "neat-pulse-mcp",
+  "version": "1.0.0",
+  "description": "Custom MCP server for the Neat Pulse API",
+  "type": "module",
+  "bin": {
+    "neat-pulse-mcp": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js"
+  },
+  "files": ["build"],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
