@@ -12,18 +12,16 @@ export interface PulseClientConfig {
   orgId: string;
 }
 
+const REQUEST_TIMEOUT_MS = 30_000;
+
 export class NeatPulseClient {
-  private apiKey: string;
-  private orgId: string;
+  private readonly orgId: string;
+  private readonly headers: Record<string, string>;
 
   constructor(config: PulseClientConfig) {
-    this.apiKey = config.apiKey;
     this.orgId = config.orgId;
-  }
-
-  private get headers(): Record<string, string> {
-    return {
-      Authorization: `Bearer ${this.apiKey}`,
+    this.headers = {
+      Authorization: `Bearer ${config.apiKey}`,
       "Content-Type": "application/json",
       Accept: "application/json",
     };
@@ -38,17 +36,28 @@ export class NeatPulseClient {
     path: string,
     body?: unknown
   ): Promise<unknown> {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
     const options: RequestInit = {
       method,
       headers: this.headers,
+      signal: controller.signal,
     };
     if (body !== undefined) {
       options.body = JSON.stringify(body);
     }
 
-    const res = await fetch(this.url(path), options);
+    let res: Response;
+    try {
+      res = await fetch(this.url(path), options);
+    } catch (e) {
+      clearTimeout(timeout);
+      throw e;
+    }
+    clearTimeout(timeout);
 
-    if (!res.ok) {
+    if (res.ok === false) {
       const text = await res.text().catch(() => "");
       throw new Error(
         `Neat Pulse API ${method} ${path} returned ${res.status}: ${text}`

@@ -65,8 +65,8 @@ server.tool(
     try {
       const data = await pulse.listEndpoints(regionId, locationId);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -81,8 +81,8 @@ server.tool(
     try {
       const data = await pulse.getEndpoint(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -97,28 +97,27 @@ server.tool(
     try {
       const data = await pulse.getEndpointSettings(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
 
 server.tool(
   "apply_device_config",
-  "Push a new configuration to a device. Pass config as a JSON string of settings to apply.",
+  "Push a new configuration to a device.",
   {
     id: z.string().describe("The endpoint/device ID"),
     config: z
-      .string()
-      .describe("JSON string of configuration settings to apply to the device"),
+      .record(z.unknown())
+      .describe("Configuration settings to apply to the device"),
   },
   async ({ id, config }) => {
     try {
-      const parsed = JSON.parse(config);
-      const data = await pulse.applyEndpointConfig(id, parsed);
+      const data = await pulse.applyEndpointConfig(id, config);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -133,8 +132,8 @@ server.tool(
     try {
       const data = await pulse.rebootEndpoint(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -149,8 +148,8 @@ server.tool(
     try {
       const data = await pulse.deleteEndpoint(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -167,8 +166,8 @@ server.tool(
     try {
       const data = await pulse.getEndpointSensorData(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -184,8 +183,8 @@ server.tool(
     try {
       const data = await pulse.getBulkSensorData(regionId, locationId);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -200,8 +199,8 @@ server.tool(
     try {
       const data = await pulse.getRoomSensorData(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -214,8 +213,8 @@ server.tool(
     try {
       const data = await pulse.getBulkRoomSensorData();
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -230,8 +229,8 @@ server.tool(
     try {
       const data = await pulse.listRooms();
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -246,8 +245,8 @@ server.tool(
     try {
       const data = await pulse.getRoom(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -263,8 +262,8 @@ server.tool(
     try {
       const data = await pulse.createRoom(args);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -281,8 +280,8 @@ server.tool(
     try {
       const data = await pulse.updateRoom(id, updates);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -297,8 +296,8 @@ server.tool(
     try {
       const data = await pulse.deleteRoom(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -313,8 +312,8 @@ server.tool(
     try {
       const data = await pulse.regenerateRoomDec(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -329,8 +328,8 @@ server.tool(
     try {
       const data = await pulse.listLocations();
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -346,8 +345,8 @@ server.tool(
     try {
       const data = await pulse.createLocation(args);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -364,8 +363,8 @@ server.tool(
     try {
       const data = await pulse.updateLocation(id, updates);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -380,8 +379,8 @@ server.tool(
     try {
       const data = await pulse.deleteLocation(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -396,8 +395,8 @@ server.tool(
     try {
       const data = await pulse.listRegions();
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -412,8 +411,8 @@ server.tool(
     try {
       const data = await pulse.createRegion(args);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -429,8 +428,8 @@ server.tool(
     try {
       const data = await pulse.updateRegion(id, updates);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -445,8 +444,8 @@ server.tool(
     try {
       const data = await pulse.deleteRegion(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -461,8 +460,8 @@ server.tool(
     try {
       const data = await pulse.listUsers();
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -477,8 +476,8 @@ server.tool(
     try {
       const data = await pulse.getUser(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -501,8 +500,8 @@ server.tool(
     try {
       const data = await pulse.createUser(args);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -522,8 +521,8 @@ server.tool(
     try {
       const data = await pulse.updateUser(id, updates);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -538,8 +537,8 @@ server.tool(
     try {
       const data = await pulse.deleteUser(id);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -554,8 +553,8 @@ server.tool(
     try {
       const data = await pulse.listProfiles();
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -579,8 +578,8 @@ server.tool(
     try {
       const data = await pulse.getAuditLogs(from, to, pageToken, pageSize);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -603,8 +602,8 @@ server.tool(
     try {
       const data = await pulse.generateBugReport(ids, uploadInCallLogs);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -621,8 +620,8 @@ server.tool(
     try {
       const data = await pulse.listRoomNotes(roomId);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -638,8 +637,8 @@ server.tool(
     try {
       const data = await pulse.getRoomNote(roomId, noteId);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -649,15 +648,14 @@ server.tool(
   "Create a note for a room.",
   {
     roomId: z.string().describe("The room ID"),
-    content: z.string().describe("JSON string of the note content object"),
+    content: z.record(z.unknown()).describe("The note content object"),
   },
   async ({ roomId, content }) => {
     try {
-      const parsed = JSON.parse(content);
-      const data = await pulse.createRoomNote(roomId, parsed);
+      const data = await pulse.createRoomNote(roomId, content);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -673,8 +671,8 @@ server.tool(
     try {
       const data = await pulse.deleteRoomNote(roomId, noteId);
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
@@ -687,8 +685,8 @@ server.tool(
     try {
       const data = await pulse.listAllRoomNotes();
       return json(data);
-    } catch (e: any) {
-      return error(e.message);
+    } catch (e: unknown) {
+      return error(e instanceof Error ? e.message : String(e));
     }
   }
 );
